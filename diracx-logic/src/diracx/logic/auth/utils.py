@@ -144,6 +144,9 @@ async def initiate_authorization_flow_with_iam(
         "scope=openid%20profile",
         f"state={encrypted_state}",
     ]
+
+    print("AT >>> initiate_authorization_flow_with_iam", url_params)
+
     authorization_flow_url = f"{authorization_endpoint}?{'&'.join(url_params)}"
     return authorization_flow_url
 
