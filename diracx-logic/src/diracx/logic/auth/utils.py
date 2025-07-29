@@ -3,6 +3,7 @@ from __future__ import annotations
 import base64
 import hashlib
 import json
+import pprint
 import secrets
 
 import httpx
@@ -170,13 +171,17 @@ async def get_token_from_iam(
         "redirect_uri": redirect_uri,
     }
 
-    print("AT >>> get_token_from_iam", token_endpoint, data)
+    print("AT >>> get_token_from_iam data", token_endpoint)
+    pprint.pprint(data)
 
     async with httpx.AsyncClient() as c:
         res = await c.post(
             token_endpoint,
             data=data,
         )
+
+        print("AT >>> result", res.status_code, res.json())
+
         if res.status_code >= 500:
             raise IAMServerError("Failed to contact IAM server")
         elif res.status_code >= 400:
