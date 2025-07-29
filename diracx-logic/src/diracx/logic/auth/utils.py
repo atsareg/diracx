@@ -170,6 +170,8 @@ async def get_token_from_iam(
         "redirect_uri": redirect_uri,
     }
 
+    print("AT >>> get_token_from_iam", token_endpoint, data)
+
     async with httpx.AsyncClient() as c:
         res = await c.post(
             token_endpoint,
