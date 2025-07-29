@@ -80,6 +80,10 @@ async def complete_authorization_flow(
     decrypted_state = decrypt_state(state, settings.state_key.fernet)
     assert decrypted_state["grant_type"] == GrantType.authorization_code
 
+    print(
+        "AT >>> complete_authorization_flow", decrypted_state, code, config, request_url
+    )
+
     # Get the ID token from the IAM
     id_token = await get_token_from_iam(
         config,
