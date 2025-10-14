@@ -142,6 +142,9 @@ class BaseOSDB(metaclass=ABCMeta):
 
         """
         assert self._client is None, "client_context cannot be nested"
+
+        print("AT >>> self._connection_kwargs", self._connection_kwargs)
+
         async with AsyncOpenSearch(**self._connection_kwargs) as self._client:
             try:
                 yield
