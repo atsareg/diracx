@@ -143,12 +143,6 @@ class BaseOSDB(metaclass=ABCMeta):
         """
         assert self._client is None, "client_context cannot be nested"
 
-        print("AT >>> self._connection_kwargs", self._connection_kwargs)
-        print("AT >>> os.listdir", os.listdir("/etc/config-os"))
-        with open("/etc/config-os/osca.crt") as cafile:
-            ca = cafile.read()
-            print(ca)
-
         async with AsyncOpenSearch(**self._connection_kwargs) as self._client:
             try:
                 yield
