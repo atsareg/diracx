@@ -47,6 +47,8 @@ async def _s3_exists(method, **kwargs: str) -> bool:
     try:
         await method(**kwargs)
     except ClientError as e:
+        print("AT >>> exc", str(e))
+
         if e.response["Error"]["Code"] != "404":
             raise
         return False
