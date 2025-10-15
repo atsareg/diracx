@@ -42,13 +42,9 @@ async def s3_object_exists(s3_client: S3Client, bucket_name: str, key: str) -> b
 
 
 async def _s3_exists(method, **kwargs: str) -> bool:
-    print("AT >>> _s3_exists", method, kwargs)
-
     try:
         await method(**kwargs)
     except ClientError as e:
-        print("AT >>> exc", str(e))
-
         if e.response["Error"]["Code"] != "404":
             raise
         return False
