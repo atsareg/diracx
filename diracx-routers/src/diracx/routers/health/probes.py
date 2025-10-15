@@ -50,5 +50,6 @@ async def startup(config: Config, auth_db: AuthDB):
     try:
         await auth_db.ping()
     except Exception as e:
+        print("AT >>> auth_db.ping exception", str(e))
         raise HTTPException(status_code=503, detail="AuthDB ping failed") from e
     return JSONResponse(content={"status": "startup complete"})
