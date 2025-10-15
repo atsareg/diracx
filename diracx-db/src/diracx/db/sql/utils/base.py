@@ -193,6 +193,7 @@ class BaseSQLDB(metaclass=ABCMeta):
     @property
     def conn(self) -> AsyncConnection:
         if self._conn.get() is None:
+            print("AT >>> conn is None", self._conn)
             raise RuntimeError(f"{self.__class__} was used before entering")
         return cast(AsyncConnection, self._conn.get())
 
@@ -232,6 +233,7 @@ class BaseSQLDB(metaclass=ABCMeta):
         try:
             await self.conn.scalar(select(1))
         except OperationalError as e:
+            print("AT >>> ping exception", str(e))
             raise SQLDBUnavailableError("Cannot ping the DB") from e
 
     async def _search(
