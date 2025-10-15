@@ -46,6 +46,7 @@ async def startup(config: Config, auth_db: AuthDB):
     Checks if at least the configuration is loaded and the AuthDB database
     connection is available.
     """
+    print("AT >>> running the startup probe")
     assert config  # Depend on the config so we know it's loaded successfully
     try:
         await auth_db.ping()
