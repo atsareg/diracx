@@ -216,7 +216,7 @@ class TwoLevelCache:
                     self.futures[key] = self.pool.submit(self._work, key, populate_func)
                 if result := self.hard_cache.get(key):
                     # The soft cache will be updated by _work so we can fill the soft
-                    # cache to avoid later requests needign to acquire the lock.
+                    # cache to avoid later requests needing to acquire the lock.
                     self.soft_cache[key] = result
                     return result
                 future = self.futures[key]
