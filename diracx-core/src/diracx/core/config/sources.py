@@ -291,9 +291,11 @@ class RemoteGitConfigSource(BaseGitConfigSource):
 
     def latest_revision(self) -> tuple[str, datetime]:
         logger.debug("Pulling latest version from %s", self)
+        print("AT >>> ", "Pulling latest version from %s", self)
         try:
             sh.git.pull(_cwd=self.repo_location, _async=False)
         except sh.ErrorReturnCode as err:
+            print("AT >>> exception", str(err))
             logger.exception(err)
 
         return super().latest_revision()
