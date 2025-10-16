@@ -127,6 +127,7 @@ class ConfigSource(metaclass=ABCMeta):
         :raises: diracx.core.exceptions.NotReadyError if the config is being loaded still
         :raises: git.exc.BadName if version does not exist
         """
+        print("AT >>> read_config", self._read_config_work)
         hexsha = self._revision_cache.get(
             "latest_revision", self._read_config_work, blocking=True
         )
