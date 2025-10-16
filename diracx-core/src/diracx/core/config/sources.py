@@ -202,6 +202,7 @@ class BaseGitConfigSource(ConfigSource):
 
     def read_raw(self, hexsha: str, modified: datetime) -> Config:
         """:param: hexsha commit hash"""
+        print("AT >>>", "Reading %s for %s with mtime %s", self, hexsha, modified)
         logger.debug("Reading %s for %s with mtime %s", self, hexsha, modified)
         try:
             print("AT >>> read_raw", hexsha, modified)
