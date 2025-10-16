@@ -198,6 +198,10 @@ class BaseGitConfigSource(ConfigSource):
             raise BadConfigurationVersionError(
                 f"Error parsing latest revision: {e}"
             ) from e
+        print(
+            "AT >>> ",
+            "Latest revision for %s is %s with mtime %s" % (self, rev, modified),
+        )
         logger.debug("Latest revision for %s is %s with mtime %s", self, rev, modified)
         return rev, modified
 
@@ -265,6 +269,7 @@ class LocalGitConfigSource(BaseGitConfigSource):
             raise ValueError(
                 f"{self.repo_location} is not a valid git repository"
             ) from e
+        print("AT >>> LocalGitConfigSource", self.git_branch, self.repo_location)
         sh.git.checkout(self.git_branch, _cwd=self.repo_location, _async=False)
 
     def __hash__(self):
