@@ -224,11 +224,14 @@ class BaseGitConfigSource(ConfigSource):
                 f"Error reading configuration: {e}"
             ) from e
 
-        print("AT >>> preparing config", len(raw_obj))
-        config_class: Config = select_from_extension(group="diracx", name="config")[
-            0
-        ].load()
-        config = config_class.model_validate(raw_obj)
+        print("AT >>> preparing config", len(raw_obj), str(raw_obj))
+        try:
+            config_class: Config = select_from_extension(group="diracx", name="config")[
+                0
+            ].load()
+            config = config_class.model_validate(raw_obj)
+        except Exception as e:
+            print("AT >>> exception", str(e))
         config._hexsha = hexsha
         config._modified = modified
         print("AT >>> returning config", config)
