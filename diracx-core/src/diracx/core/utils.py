@@ -234,6 +234,7 @@ class TwoLevelCache:
         # value from the hard cache. If it's not there, raise NotReadyError.
         if result := self.hard_cache.get(key):
             return result
+        print("AT >>> TwoLevelCache.get", key)
         raise NotReadyError(f"Cache key {key} is not ready yet.")
 
     def _work(self, key: str, populate_func: Callable[[], Any]) -> None:
