@@ -103,7 +103,7 @@ class ConfigSource(metaclass=ABCMeta):
     def __init_subclass__(cls) -> None:
         """Keep a record of <scheme: class>."""
         if cls.scheme in cls.__registry:
-            raise TypeError(f"{cls.scheme=} is already define")
+            raise TypeError(f"{cls.scheme=} is already defined")
         cls.__registry[cls.scheme] = cls
 
     @classmethod
@@ -204,6 +204,7 @@ class BaseGitConfigSource(ConfigSource):
         """:param: hexsha commit hash"""
         logger.debug("Reading %s for %s with mtime %s", self, hexsha, modified)
         try:
+            print("AT >>> read_raw", hexsha, modified)
             blob = sh.git.show(
                 f"{hexsha}:{DEFAULT_CONFIG_FILE}",
                 _cwd=self.repo_location,
@@ -212,6 +213,7 @@ class BaseGitConfigSource(ConfigSource):
             )
             raw_obj = yaml.safe_load(blob)
         except sh.ErrorReturnCode as e:
+            print("AT >>> read_raw exception", str(e))
             raise BadConfigurationVersionError(
                 f"Error reading configuration: {e}"
             ) from e
