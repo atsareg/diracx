@@ -207,7 +207,7 @@ class BaseGitConfigSource(ConfigSource):
 
     def read_raw(self, hexsha: str, modified: datetime) -> Config:
         """:param: hexsha commit hash"""
-        print("AT >>>", "Reading %s for %s with mtime %s", self, hexsha, modified)
+        print("AT >>> Basic", "Reading %s for %s with mtime %s", self, hexsha, modified)
         logger.debug("Reading %s for %s with mtime %s", self, hexsha, modified)
         try:
             print("AT >>> read_raw", hexsha, modified)
@@ -224,12 +224,14 @@ class BaseGitConfigSource(ConfigSource):
                 f"Error reading configuration: {e}"
             ) from e
 
+        print("AT >>> preparing config", len(raw_obj))
         config_class: Config = select_from_extension(group="diracx", name="config")[
             0
         ].load()
         config = config_class.model_validate(raw_obj)
         config._hexsha = hexsha
         config._modified = modified
+        print("AT >>> returning config", config)
         return config
 
     def extract_remote_url(self, backend_url: ConfigSourceUrl) -> str:
