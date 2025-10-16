@@ -176,6 +176,7 @@ class BaseGitConfigSource(ConfigSource):
         self.git_branch = self.get_git_branch_from_url(backend_url)
 
     def latest_revision(self) -> tuple[str, datetime]:
+        print("AT >>> latest_revision", self.git_branch, self.repo_location)
         try:
             rev = sh.git(
                 "rev-parse",
@@ -291,7 +292,7 @@ class RemoteGitConfigSource(BaseGitConfigSource):
 
     def latest_revision(self) -> tuple[str, datetime]:
         logger.debug("Pulling latest version from %s", self)
-        print("AT >>> ", "Pulling latest version from %s", self)
+        print("AT >>> ", "Pulling latest version from %s", self, self.repo_location)
         try:
             sh.git.pull(_cwd=self.repo_location, _async=False)
         except sh.ErrorReturnCode as err:
